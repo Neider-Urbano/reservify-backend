@@ -19,6 +19,8 @@ export const authenticateToken = (
 
   try {
     const decoded = jwt.verify(token, secretKey);
+
+    // @ts-expect-error: Este error es esperado porque 'user' no existe en Request
     req.user = decoded;
     next();
   } catch {

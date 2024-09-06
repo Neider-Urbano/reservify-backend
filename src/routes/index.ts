@@ -22,7 +22,7 @@ router.use(
 
 router.use(notFound);
 
-router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+router.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res
     .status(500)

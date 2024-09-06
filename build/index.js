@@ -6,7 +6,7 @@ var __importDefault =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 const database_1 = __importDefault(require('./src/config/database'));
-const server_1 = __importDefault(require('./src/server'));
+const server_1 = __importDefault(require('./server'));
 const port = process.env.PORT || 3000;
 (0, database_1.default)();
 server_1.default.listen(port, () => {

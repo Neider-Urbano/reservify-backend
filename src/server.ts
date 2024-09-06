@@ -4,6 +4,7 @@ import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import routes from './routes/index';
+import { setupSwagger } from '../swaggerConfig';
 
 const app = express();
 app.use(helmet());
@@ -19,6 +20,7 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(express.json());
 app.use(mongoSanitize());
+setupSwagger(app);
 app.use(routes);
 
 export default app;

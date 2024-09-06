@@ -17,12 +17,6 @@
   "rules": {
     "no-console": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "prettier/prettier": "error",
-    "@typescript-eslint/ban-ts-comment": [
-      "error",
-      {
-        "ts-ignore": "allow-with-description"
-      }
-    ]
+    "prettier/prettier": ["error", { "endOfLine": "lf" }]
   }
 }

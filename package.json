@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "ts-node-dev --respawn --ignore-watch node_modules ./index.ts",
     "dev": "nodemon",
-    "lint": "eslint .",
+    "lint": "npm run format & eslint .",
     "format": "prettier --write ."
   },
   "keywords": [],

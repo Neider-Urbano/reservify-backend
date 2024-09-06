@@ -45,8 +45,72 @@ export const register = async (req: Request, res: Response) => {
   const newUser = new User({
     email,
     password: hashedPassword,
+    rol: 'user',
   });
 
   await newUser.save();
   res.status(201).json({ message: 'Usuario creado correctamente' });
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password, role } = req.body;
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    if (email) {
+      user.email = email;
+    }
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
+    if (role) {
+      user.role = role;
+    }
+
+    await user.save();
+
+    res.json({ message: 'Usuario actualizado correctamente', user });
+  } catch (error) {
+    res.status(400).json({ message: 'Error al actualizar el usuario', error });
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    res.status(400).json({ message: 'Error al eliminar el usuario', error });
+  }
+};
+
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ message: 'Error al obtener el usuario', error });
+  }
+};
+
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(400).json({ message: 'Error al obtener los usuarios', error });
+  }
 };

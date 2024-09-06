@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
+import reservationRoutes from './routes/reservationRoutes';
 
 const app = express();
 
@@ -26,5 +27,7 @@ app.use(mongoSanitize());
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Reservify API');
 });
+
+app.use('/api', reservationRoutes);
 
 export default app;

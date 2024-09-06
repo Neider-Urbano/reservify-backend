@@ -2,7 +2,7 @@
   "name": "reservify-backend",
   "version": "1.0.0",
   "description": "Este es el backend del sistema de reservas Reservify, construido con Node.js, Express y MongoDB.",
-  "main": "index.js",
+  "main": ".src/index.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",

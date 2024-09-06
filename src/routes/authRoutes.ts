@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import {
   deleteUser,
   getUser,
@@ -8,6 +8,7 @@ import {
   updateUser,
 } from '../controllers/authController';
 import { authenticateToken, authorizeRole } from '../middlewares/auth';
+import { notFound } from '../middlewares/notFound';
 
 const router = express.Router();
 
@@ -32,5 +33,6 @@ router.delete(
   authorizeRole(['admin']),
   deleteUser,
 );
+router.use(notFound);
 
 export default router;

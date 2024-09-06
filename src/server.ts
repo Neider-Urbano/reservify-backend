@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
@@ -6,9 +6,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import routes from './routes/index';
 
 const app = express();
-
 app.use(helmet());
-
 app.use(cors());
 
 const limiter = rateLimit({
@@ -19,15 +17,8 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
 app.use(express.json());
-
 app.use(mongoSanitize());
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Bienvenido a Reservify API');
-});
-
 app.use(routes);
 
 export default app;

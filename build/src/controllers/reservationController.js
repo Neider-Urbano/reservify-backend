@@ -13,11 +13,12 @@ exports.getReservations =
 const Reservation_1 = __importDefault(require('../models/Reservation'));
 const createReservation = async (req, res) => {
   try {
-    const { customerId, serviceId, date } = req.body;
+    const { userId, serviceId, date, comments } = req.body;
     const reservation = new Reservation_1.default({
-      customer: customerId,
+      user: userId,
       service: serviceId,
       date: new Date(date),
+      comments,
     });
     await reservation.save();
     res.status(201).json({ message: 'Reserva creada', reservation });
@@ -28,13 +29,15 @@ const createReservation = async (req, res) => {
 exports.createReservation = createReservation;
 const updateReservation = async (req, res) => {
   try {
-    const { customerId, serviceId, date } = req.body;
+    const { userId, serviceId, date, comments, status } = req.body;
     const reservation = await Reservation_1.default.findByIdAndUpdate(
       req.params.id,
       {
-        customer: customerId,
+        user: userId,
         service: serviceId,
         date: new Date(date),
+        comments,
+        status,
       },
       { new: true },
     );
@@ -63,7 +66,7 @@ const deleteReservation = async (req, res) => {
 exports.deleteReservation = deleteReservation;
 const getReservations = async (req, res) => {
   try {
-    const { date, serviceId, customerId } = req.query;
+    const { date, serviceId, userId, status } = req.query;
     const filters = {};
     if (typeof date === 'string' && !isNaN(Date.parse(date))) {
       filters.date = new Date(date);
@@ -71,12 +74,15 @@ const getReservations = async (req, res) => {
     if (typeof serviceId === 'string') {
       filters.service = serviceId;
     }
-    if (typeof customerId === 'string') {
-      filters.customer = customerId;
+    if (typeof userId === 'string') {
+      filters.user = userId;
+    }
+    if (typeof status === 'string') {
+      filters.status = status;
     }
     const reservations = await Reservation_1.default
       .find(filters)
-      .populate('customer service');
+      .populate('user service');
     res.json(reservations);
   } catch (error) {
     res.status(400).json({ message: 'Error al recuperar las reservas', error });

@@ -45,35 +45,29 @@ var __importStar =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 const mongoose_1 = __importStar(require('mongoose'));
-const ReservationSchema = new mongoose_1.Schema(
+const userSchema = new mongoose_1.Schema(
   {
-    customer: {
-      type: mongoose_1.default.Schema.Types.ObjectId,
-      ref: 'Customer',
-      required: true,
-    },
-    service: {
-      type: mongoose_1.default.Schema.Types.ObjectId,
-      ref: 'Service',
-      required: true,
-    },
-    date: {
-      type: Date,
-      required: [true, 'La fecha de la reserva es obligatoria'],
-    },
-    status: {
+    email: {
       type: String,
-      enum: ['pending', 'confirmed', 'cancelled'],
-      default: 'pending',
-    },
-    comments: {
-      type: String,
+      required: [true, 'El email es obligatorio'],
+      unique: true,
+      lowercase: true,
       trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'La contraseña es obligatoria'],
+      minlength: 6,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
     },
   },
   {
     timestamps: true,
   },
 );
-const Reservation = mongoose_1.default.model('Reservation', ReservationSchema);
-exports.default = Reservation;
+const User = mongoose_1.default.model('User', userSchema);
+exports.default = User;

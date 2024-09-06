@@ -3,11 +3,12 @@ import Reservation from '../models/Reservation';
 
 export const createReservation = async (req: Request, res: Response) => {
   try {
-    const { customerId, serviceId, date } = req.body;
+    const { userId, serviceId, date, comments } = req.body;
     const reservation = new Reservation({
-      customer: customerId,
+      user: userId,
       service: serviceId,
       date: new Date(date),
+      comments,
     });
     await reservation.save();
     res.status(201).json({ message: 'Reserva creada', reservation });
@@ -18,13 +19,15 @@ export const createReservation = async (req: Request, res: Response) => {
 
 export const updateReservation = async (req: Request, res: Response) => {
   try {
-    const { customerId, serviceId, date } = req.body;
+    const { userId, serviceId, date, comments, status } = req.body;
     const reservation = await Reservation.findByIdAndUpdate(
       req.params.id,
       {
-        customer: customerId,
+        user: userId,
         service: serviceId,
         date: new Date(date),
+        comments,
+        status,
       },
       { new: true },
     );
@@ -51,12 +54,13 @@ export const deleteReservation = async (req: Request, res: Response) => {
 
 export const getReservations = async (req: Request, res: Response) => {
   try {
-    const { date, serviceId, customerId } = req.query;
+    const { date, serviceId, userId, status } = req.query;
 
     const filters: {
       date?: Date;
       service?: string;
-      customer?: string;
+      user?: string;
+      status?: string;
     } = {};
 
     if (typeof date === 'string' && !isNaN(Date.parse(date))) {
@@ -67,12 +71,16 @@ export const getReservations = async (req: Request, res: Response) => {
       filters.service = serviceId;
     }
 
-    if (typeof customerId === 'string') {
-      filters.customer = customerId;
+    if (typeof userId === 'string') {
+      filters.user = userId;
+    }
+
+    if (typeof status === 'string') {
+      filters.status = status;
     }
 
     const reservations =
-      await Reservation.find(filters).populate('customer service');
+      await Reservation.find(filters).populate('user service');
     res.json(reservations);
   } catch (error) {
     res.status(400).json({ message: 'Error al recuperar las reservas', error });

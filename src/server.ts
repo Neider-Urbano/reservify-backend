@@ -4,6 +4,8 @@ import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import reservationRoutes from './routes/reservationRoutes';
+import authRoutes from './routes/authRoutes';
+import { authenticateToken } from './middlewares/auth';
 
 const app = express();
 
@@ -25,9 +27,11 @@ app.use(express.json());
 app.use(mongoSanitize());
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Reservify API');
+  res.send('Bienvenido a Reservify API');
 });
 
-app.use('/api', reservationRoutes);
+app.use('/api/auth', authRoutes);
+
+app.use('/api', authenticateToken, reservationRoutes);
 
 export default app;

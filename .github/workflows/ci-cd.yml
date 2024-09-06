@@ -28,7 +28,10 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Bump version and create changelog
-        uses: phillipj/semantic-release-action@v2
+      - name: Install semantic-release
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
+
+      - name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: semantic-release

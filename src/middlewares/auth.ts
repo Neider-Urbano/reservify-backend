@@ -30,3 +30,16 @@ export const authenticateToken = (
     res.status(401).json({ message: 'Invalid token' });
   }
 };
+
+export const authorizeRole = (roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    // @ts-expect-error: Este error es esperado porque 'user' no existe en Request
+    if (req.user && roles.includes(req.user.role)) {
+      next();
+    } else {
+      res
+        .status(403)
+        .json({ message: 'No tienes permiso para acceder a esta ruta' });
+    }
+  };
+};

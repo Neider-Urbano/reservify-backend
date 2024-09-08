@@ -4,13 +4,27 @@ import Reservation from '../models/Reservation';
 export const createReservation = async (req: Request, res: Response) => {
   try {
     const { userId, serviceId, date, comments } = req.body;
+
+    const existingReservation = await Reservation.findOne({
+      customer: userId,
+      service: serviceId,
+    });
+
+    if (existingReservation) {
+      return res.status(400).json({
+        message: 'Ya existe una reserva para este servicio en esta fecha.',
+      });
+    }
+
     const reservation = new Reservation({
-      user: userId,
+      customer: userId,
       service: serviceId,
       date: new Date(date),
       comments,
     });
+
     await reservation.save();
+
     res.status(201).json({ message: 'Reserva creada', reservation });
   } catch (error) {
     res.status(400).json({ message: 'Error al crear la reserva', error });
@@ -23,7 +37,7 @@ export const updateReservation = async (req: Request, res: Response) => {
     const reservation = await Reservation.findByIdAndUpdate(
       req.params.id,
       {
-        user: userId,
+        customer: userId,
         service: serviceId,
         date: new Date(date),
         comments,
@@ -59,7 +73,7 @@ export const getReservations = async (req: Request, res: Response) => {
     const filters: {
       date?: Date;
       service?: string;
-      user?: string;
+      customer?: string;
       status?: string;
     } = {};
 
@@ -72,7 +86,7 @@ export const getReservations = async (req: Request, res: Response) => {
     }
 
     if (typeof userId === 'string') {
-      filters.user = userId;
+      filters.customer = userId;
     }
 
     if (typeof status === 'string') {

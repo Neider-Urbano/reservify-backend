@@ -24,7 +24,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   const token = jwt.sign(
-    { _id: user._id, email: user.email },
+    { _id: user._id, email: user.email, role: user.role },
     process.env.JWT_SECRET!,
     { expiresIn: '1h' },
   );
@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const register = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
 
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -43,6 +43,7 @@ export const register = async (req: Request, res: Response) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = new User({
+    name,
     email,
     password: hashedPassword,
     rol: 'user',
@@ -54,7 +55,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password, role, name } = req.body;
 
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -72,6 +73,10 @@ export const updateUser = async (req: Request, res: Response) => {
 
     if (role) {
       user.role = role;
+    }
+
+    if (name) {
+      user.name = name;
     }
 
     await user.save();

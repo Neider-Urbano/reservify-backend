@@ -46,7 +46,7 @@ const router = express.Router();
  *       400:
  *         description: Error al crear el servicio.
  */
-router.post('/services', authorizeRole(['admin']), createService);
+router.post('', authorizeRole(['admin']), createService);
 
 /**
  * @swagger
@@ -63,7 +63,7 @@ router.post('/services', authorizeRole(['admin']), createService);
  *       400:
  *         description: Error al obtener los servicios.
  */
-router.get('/services', authorizeRole(['admin', 'user']), getServices);
+router.get('', authorizeRole(['admin', 'user']), getServices);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ router.get('/services', authorizeRole(['admin', 'user']), getServices);
  *       404:
  *         description: Servicio no encontrado.
  */
-router.put('/services/:id', authorizeRole(['admin']), updateService);
+router.put('/:id', authorizeRole(['admin']), updateService);
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ router.put('/services/:id', authorizeRole(['admin']), updateService);
  *       400:
  *         description: Error al eliminar el servicio.
  */
-router.delete('/services/:id', authorizeRole(['admin']), deleteService);
+router.delete('/:id', authorizeRole(['admin']), deleteService);
 
 router.use(notFound);
 

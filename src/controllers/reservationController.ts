@@ -93,8 +93,7 @@ export const getReservations = async (req: Request, res: Response) => {
       filters.status = status;
     }
 
-    const reservations =
-      await Reservation.find(filters).populate('user service');
+    const reservations = await Reservation.find(filters);
     res.json(reservations);
   } catch (error) {
     res.status(400).json({ message: 'Error al recuperar las reservas', error });

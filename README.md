@@ -52,3 +52,7 @@ Este es el backend del sistema de reservas Reservify, construido con Node.js, Ex
 ## USO
 
 La API está documentada usando Swagger. Puedes acceder a la documentación de la API en http://localhost:3000/api-docs después de iniciar el servidor.
+
+## Frontend
+
+El repositorio del frontend para el sistema de reservas está disponible aquí: [Reservify Frontend](https://github.com/Neider-Urbano/reservify-frontend.git)

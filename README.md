@@ -56,3 +56,51 @@ La API está documentada usando Swagger. Puedes acceder a la documentación de l
 ## Frontend
 
 El repositorio del frontend para el sistema de reservas está disponible aquí: [Reservify Frontend](https://github.com/Neider-Urbano/reservify-frontend.git)
+
+# Diagrama de Arquitectura de Reservify
+
+Este diagrama ilustra la arquitectura del sistema Reservify, que incluye el frontend, el backend, y la base de datos.
+
+```plaintext
++--------------------+
+|    Frontend        |
+|--------------------|
+| Angular            |
+| Tailwind CSS       |
+|                    |
+|  +--------------+  |
+|  | Interfaz de  |  |
+|  | Usuario      |  |
+|  |              |  |
+|  | +----------+ |  |
+|  | | Servicio | |  |
+|  | +----------+ |  |
+|  +--------------+  |
++---------+----------+
+          |
+          |
+          v
++--------------------+   HTTP Requests   +--------------------+
+|     Backend        | <--------------> |   Base de Datos    |
+|--------------------|                  |--------------------|
+| Node.js            |                  | MongoDB            |
+| Express            |                  |                    |
+| TypeScript         |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | API REST     |  |                  |                    |
+|  | (Controllers,|  |                  |                    |
+|  |  Services)   |  |                  |                    |
+|  +--------------+  |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | Auth          | |                  |                    |
+|  | (JWT)         | |                  |                    |
+|  +--------------+  |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | Swagger       | |                  |                    |
+|  | Documentation | |                  |                    |
+|  +--------------+  |                  |                    |
++--------------------+                  +--------------------+
+```

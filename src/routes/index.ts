@@ -11,10 +11,10 @@ router.get('/', (req: Request, res: Response) => {
   res.send('Bienvenido a Reservify API');
 });
 
-router.use('/api', authRoutes);
-router.use('/api', authenticateToken, serviceRoutes);
+router.use('/api/auth', authRoutes);
+router.use('/api/services', authenticateToken, serviceRoutes);
 router.use(
-  '/api',
+  '/api/reservations',
   authenticateToken,
   authorizeRole(['admin', 'user']),
   reservationRoutes,

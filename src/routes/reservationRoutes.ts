@@ -46,7 +46,7 @@ const router = express.Router();
  *       400:
  *         description: Error al crear la reserva.
  */
-router.post('/reservations', createReservation);
+router.post('', createReservation);
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.post('/reservations', createReservation);
  *       400:
  *         description: Error al obtener las reservas.
  */
-router.get('/reservations', getReservations);
+router.get('', getReservations);
 
 /**
  * @swagger
@@ -130,7 +130,7 @@ router.get('/reservations', getReservations);
  *       404:
  *         description: Reserva no encontrada.
  */
-router.put('/reservations/:id', updateReservation);
+router.put('/:id', updateReservation);
 
 /**
  * @swagger
@@ -154,7 +154,7 @@ router.put('/reservations/:id', updateReservation);
  *       400:
  *         description: Error al eliminar la reserva.
  */
-router.delete('/reservations/:id', deleteReservation);
+router.delete('/:id', deleteReservation);
 
 router.use(notFound);
 

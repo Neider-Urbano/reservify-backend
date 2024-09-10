@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 interface IService extends Document {
+  id: string;
   name: string;
   description: string;
   price: number;

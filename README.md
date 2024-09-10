@@ -52,3 +52,61 @@ Este es el backend del sistema de reservas Reservify, construido con Node.js, Ex
 ## USO
 
 La API está documentada usando Swagger. Puedes acceder a la documentación de la API en http://localhost:3000/api-docs después de iniciar el servidor.
+
+## Despliegue
+
+Puedes ver el despliegue en producción del backend en el siguiente enlace:
+
+[Reservify Backend - Vercel](https://reservify-backend-silk.vercel.app/)
+
+## Frontend
+
+El repositorio del frontend para el sistema de reservas está disponible aquí: [Reservify Frontend](https://github.com/Neider-Urbano/reservify-frontend.git)
+
+# Diagrama de Arquitectura de Reservify
+
+Este diagrama ilustra la arquitectura del sistema Reservify, que incluye el frontend, el backend, y la base de datos.
+
+```plaintext
++--------------------+
+|    Frontend        |
+|--------------------|
+| Angular            |
+| Tailwind CSS       |
+|                    |
+|  +--------------+  |
+|  | Interfaz de  |  |
+|  | Usuario      |  |
+|  |              |  |
+|  | +----------+ |  |
+|  | | Servicio | |  |
+|  | +----------+ |  |
+|  +--------------+  |
++---------+----------+
+          |
+          |
+          v
++--------------------+   HTTP Requests   +--------------------+
+|     Backend        | <--------------> |   Base de Datos    |
+|--------------------|                  |--------------------|
+| Node.js            |                  | MongoDB            |
+| Express            |                  |                    |
+| TypeScript         |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | API REST     |  |                  |                    |
+|  | (Controllers,|  |                  |                    |
+|  |  Services)   |  |                  |                    |
+|  +--------------+  |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | Auth          | |                  |                    |
+|  | (JWT)         | |                  |                    |
+|  +--------------+  |                  |                    |
+|                    |                  |                    |
+|  +--------------+  |                  |                    |
+|  | Swagger       | |                  |                    |
+|  | Documentation | |                  |                    |
+|  +--------------+  |                  |                    |
++--------------------+                  +--------------------+
+```
